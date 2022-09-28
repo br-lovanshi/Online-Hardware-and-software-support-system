@@ -1,0 +1,137 @@
+Use DataBase :- SEDDB;
+
+mysql> create database SEDDB;
+Query OK, 1 row affected (0.01 s
+
+HOD Table :- 
+
+create table HOD ( 
+
+HODUserName varchar(40) not null Unique,
+HODPass varchar(10) not null );
+
+
+
+Engineer Table :- 
+
+create table Engineer ( enggId int primary key auto_increment,
+ enggName varchar(30),
+enggMail varchar(40) not null,
+enggMobile varchar(12),
+enggPassword varchar(10) not null );
+
+
+
+Employee Table :- 
+
+
+create table Employee ( EmployeeId int primary key auto_increment,
+EmployeeName varchar(30) not null,
+EmployeeUserName varchar(30) not null,
+EmployeeMobile varchar(12) not null,
+EmployeeCity varchar(20),
+EmployeePass varchar(10) not null );
+
+
+
+
+
+Complain Table :- 
+
+create table Complain ( complainId int primary key ,
+complainName varchar(30) not null,
+complainDetail varchar(40),
+complainStatus varchar(20) not null,
+
+complainType varchar(20) not null,
+complainAnswer varchar(40),
+EmployeeId int not null,
+foreign key (EmployeeId) references Employee(EmployeeId) on delete cascade on update cascade);
+
+
+
+
+
+
+
+complainAssign Table :- 
+
+create table ComplainAssign ( cid int ,
+eid int,
+complainStatus varchar(30) not null,
+foreign key (cid) references Complain(complainId) on delete cascade on update cascade,
+foreign key (eId) references Engineer(enggId) on delete cascade on update cascade
+);
+
+
+
+mysql> desc hod;
++-------------+-------------+------+-----+---------+-------+
+| Field       | Type        | Null | Key | Default | Extra |
++-------------+-------------+------+-----+---------+-------+
+| HODUserName | varchar(40) | NO   | PRI | NULL    |       |
+| HODPass     | varchar(10) | NO   |     | NULL    |       |
++-------------+-------------+------+-----+---------+-------+
+2 rows in set (0.03 sec)
+
+mysql> desc engineer
+    -> ;
++--------------+-------------+------+-----+---------+----------------+
+| Field        | Type        | Null | Key | Default | Extra          |
++--------------+-------------+------+-----+---------+----------------+
+| enggId       | int         | NO   | PRI | NULL    | auto_increment |
+| enggName     | varchar(30) | YES  |     | NULL    |                |
+| enggMail     | varchar(40) | YES  | UNI | NULL    |                |
+| enggMobile   | varchar(12) | YES  | UNI | NULL    |                |
+| enggPassword | varchar(10) | NO   |     | NULL    |                |
++--------------+-------------+------+-----+---------+----------------+
+5 rows in set (0.01 sec)
+
+
+
+
+mysql> desc employee;
++------------------+-------------+------+-----+---------+----------------+
+| Field            | Type        | Null | Key | Default | Extra          |
++------------------+-------------+------+-----+---------+----------------+
+| EmployeeId       | int         | NO   | PRI | NULL    | auto_increment |
+| EmployeeName     | varchar(30) | NO   |     | NULL    |                |
+| EmployeeUserName | varchar(30) | NO   |     | NULL    |                |
+| EmployeeMobile   | varchar(12) | NO   |     | NULL    |                |
+| EmployeeCity     | varchar(20) | YES  |     | NULL    |                |
+| EmployeePass     | varchar(10) | NO   |     | NULL    |                |
++------------------+-------------+------+-----+---------+----------------+
+6 rows in set (0.00 sec)
+
+mysql> desc complain;
++----------------+-------------+------+-----+---------+-------+
+| Field          | Type        | Null | Key | Default | Extra |
++----------------+-------------+------+-----+---------+-------+
+| complainId     | int         | NO   | PRI | NULL    |       |
+| complainName   | varchar(30) | NO   |     | NULL    |       |
+| complainDetail | varchar(40) | YES  |     | NULL    |       |
+| complainStatus | varchar(20) | NO   |     | NULL    |       |
+| complainType   | varchar(20) | NO   |     | NULL    |       |
+| complainAnswer | varchar(40) | YES  |     | NULL    |       |
+| EmployeeId     | int         | NO   | MUL | NULL    |       |
++----------------+-------------+------+-----+---------+-------+
+7 rows in set (0.00 sec)
+
+mysql> desc complainAssign;
++----------------+-------------+------+-----+---------+-------+
+| Field          | Type        | Null | Key | Default | Extra |
++----------------+-------------+------+-----+---------+-------+
+| cid            | int         | YES  | MUL | NULL    |       |
+| eid            | int         | YES  | MUL | NULL    |       |
+| complainStatus | varchar(30) | NO   |     | NULL    |       |
++----------------+-------------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+mysql>
+
+
+
+
+
+
+
