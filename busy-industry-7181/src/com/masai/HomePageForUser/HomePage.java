@@ -28,16 +28,16 @@ public class HomePage {
 	
 	
 
-	public static void main(String[] args) throws IOException {
+	public static void main(String[] args) throws Exception, IOException, EngineerExecption {
 
-		
-		
+		try {
+		while(true) {
 		System.out.println("\n Walcome to The Online \n Hardware and software support system \n");
 		
 		System.out.println("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ \n");
 		
-		try {
 			
+		
 		
 		
 		Usecases usecases = new Usecases();
@@ -47,7 +47,9 @@ public class HomePage {
 		System.out.println("Enter 2 for Engineer Login \n");
 		System.out.println("Enter 3 for Employee signup \n");
 		System.out.println("Enter 4 for Employee Login \n");
-		int x = Integer.parseInt(sc.readLine().trim());
+		
+		
+		int x = Integer.parseInt(sc.readLine());
 		
 		
 		
@@ -57,11 +59,11 @@ public class HomePage {
 		
 //		HOD ----------------------------------------------------------------------------------
 		case 1:
-			while(true) {
+		
 			
 			
 			if(usecases.HodLogin()) {
-			
+				while(true) {
 			System.out.println("=========================================");
 			
 			
@@ -75,13 +77,21 @@ public class HomePage {
 			
 			System.out.println("Enter 5 for Delete Engineer");
 			
+			System.out.println("Enter 6 for back");
+			
+
 			
 			int y = Integer.parseInt(sc.readLine().trim());
+			if(y == 6) {
+				break;
+			}
 			
+		
 			
 			switch(y) {
 			
 			case 1: 
+			
 				usecases.AddEngineerByHOD();
 				break;
 			
@@ -101,27 +111,32 @@ public class HomePage {
 				break;
 				
 				case 5: 
-				usecases.RemoveEngineerByHOD();
+				try {
+					usecases.RemoveEngineerByHOD();
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 				break;
-				
 				
 				default:
 					System.out.println("You enter Wrong option!");
 					break;
-				
 			}
 			
+			}
 			}
 		
 			
 			break;
-	}
+	
 			
 //		Engineer ------------------------------------------------------	
 			
 		case 2: 
 				if(usecases.EngineerLogin()) {
 					
+				while(true) {
 					System.out.println("---------------------------------");
 					
 					
@@ -130,13 +145,15 @@ public class HomePage {
 					System.out.println("press 3 for Update the Password");
 					
 					System.out.println("Press 4 for Mobile Number Updatation ");
-					
+					System.out.println("Press 5 for back");
 					int y = Integer.parseInt(sc.readLine().trim());
 //							Usecases.sc.nextInt();
-					
-					
+					if(y == 5) {
+						break;
+					}
+
 					switch(y) {
-					
+						
 					case 1:
 						usecases.UpdateStatusByEngineer();
 						break;
@@ -163,26 +180,27 @@ public class HomePage {
 						
 						
 					}		
-							
+//					}	
 				}
 			   
 			break;
 			
-			
+				}
 //	    Employee -----------------------------------------------------------------------------
 			
 			
 		case 3:
 			
 			usecases.EmployeeRegistration() ;
-			break;
-			
+		break;
+		
 			
 //			Complain -------------------------------------------------------------------------
 		case 4: 
 			
 			if(usecases.EmployeeLogin()) {
 				
+				while(true) {
 				System.out.println("================================================");
 				
 				
@@ -195,11 +213,13 @@ public class HomePage {
 				
 				System.out.println("Enter 4 for Update Password");
 				
-				
+				System.out.println("enter 6 for back");
 				int y = Integer.parseInt(sc.readLine().trim());
-//						Usecases.sc.nextInt();
-				
-				
+
+				if(y == 6) {
+					break;
+				}
+
 				switch(y) {
 				
 				case 1: 
@@ -229,6 +249,7 @@ public class HomePage {
 					
 				}
 				
+
 				
 			}
 			
@@ -237,14 +258,26 @@ public class HomePage {
 			
 			
 			
-			
-		default:
-			System.out.println("You enter Wrong option!");
-			break;
+//			
+//		default:
+//			System.out.println("You enter Wrong option!");
+//			break;
 		}
-		} catch (InputMismatchException e) {
+		}
+		
+		} 
+	
+		
+		
+		
+		
+		} //while(true)end
+		
+		catch (Exception e) {
 			// TODO: handle exception
-			System.out.println( "Please Enter wright Key " );
+			
+			System.out.println( "Somthing went wrong check it -> ("  + e.getMessage()+ " )");
 		}
+		
 	}
 }

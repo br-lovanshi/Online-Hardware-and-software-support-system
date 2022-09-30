@@ -6,7 +6,7 @@ public class EmployeeBean {
 	private int EmployeeId;
 	private String EmployeeName;
 	private String EmployeeEmail;
-	private int EmployeeMobile;
+	private String EmployeeMobile;
 	private String EmployeeCity;
 	private String EmployeePass;
 
@@ -14,7 +14,7 @@ public class EmployeeBean {
 		// TODO Auto-generated constructor stub
 	}
 
-	public EmployeeBean(int employeeId, String employeeName, String employeeEmail, int employeeMobile,
+	public EmployeeBean(int employeeId, String employeeName, String employeeEmail, String employeeMobile,
 			String employeeCity, String employeePass) {
 		super();
 		EmployeeId = employeeId;
@@ -49,11 +49,11 @@ public class EmployeeBean {
 		EmployeeEmail = employeeEmail;
 	}
 
-	public int getEmployeeMobile() {
+	public String getEmployeeMobile() {
 		return EmployeeMobile;
 	}
 
-	public void setEmployeeMobile(int employeeMobile) {
+	public void setEmployeeMobile(String employeeMobile) {
 		EmployeeMobile = employeeMobile;
 	}
 

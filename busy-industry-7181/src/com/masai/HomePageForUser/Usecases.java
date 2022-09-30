@@ -1,7 +1,9 @@
 package com.masai.HomePageForUser;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStreamReader;
+import java.lang.reflect.UndeclaredThrowableException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -20,21 +22,22 @@ import com.masai.exceptions.EngineerExecption;
 
 
 	class Usecases {
-		
+	   
 //		   static   Scanner sc = new Scanner(System.in);
 		  static BufferedReader sc = new BufferedReader(new InputStreamReader(System.in));
-		   
+//		   String s = sc.readLine();
+//		int x =    sc.readLine(); Integer.parseInt(sc.readLine().trim());
 		   
 		//   HOD Start -----------------------------------------------------
-			public boolean HodLogin() {
+			public boolean HodLogin() throws IOException {
 					
 				boolean isTrue = false;
 			
 				
 				System.out.println("Enter HOD Email(UserName)");
-				String UserName  = sc.next();
+				String UserName  = sc.readLine();
 				System.out.println("Enter HOD Password");
-				String Pass = sc.next();
+				String Pass = sc.readLine();
 				
 			
 				
@@ -65,16 +68,16 @@ import com.masai.exceptions.EngineerExecption;
 				return isTrue;
 			}
 			
-			public  void AddEngineerByHOD() {
+			public  void AddEngineerByHOD() throws IOException, EngineerExecption {
 
 				System.out.println("Enter Engineer Name");
-				String name = sc.next();
+				String name = sc.readLine();
 				System.out.println("Enter Engineer Email");
-				String email = sc.next();
+				String email = sc.readLine();
 				System.out.println("Enter Engineer Mobile");
-				int mobile = sc.nextInt();
+				int mobile = Integer.parseInt(sc.readLine().trim());
 				System.out.println("Enter Engineer PassWord");
-				String pass  = sc.next();
+				String pass  = sc.readLine();
 				
 				EngineerBean bean = new EngineerBean(0,name,email,mobile,pass);
 				
@@ -93,7 +96,13 @@ import com.masai.exceptions.EngineerExecption;
 				EngineerDao engineerDao = new EngineerDaoImp();
 				
 
-			ArrayList<EngineerBean> bean = engineerDao.allEngineersList();
+			ArrayList<EngineerBean> bean = null;
+			try {
+				bean = engineerDao.allEngineersList();
+			} catch (EngineerExecption e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			
 			for(EngineerBean i : bean) {
 						System.out.println("------------------------------------------------ \n");
@@ -109,13 +118,13 @@ import com.masai.exceptions.EngineerExecption;
 
 
 
-		    public void RemoveEngineerByHOD() {
+		    public void RemoveEngineerByHOD() throws Exception, IOException {
 			
 			
 			
 			System.out.println("Enter Engineer ID ");
 			
-			int id = sc.nextInt();
+			int id =  Integer.parseInt(sc.readLine().trim());
 			
 			EngineerDao engineerDao = new EngineerDaoImp();
 			String s = null;
@@ -144,7 +153,13 @@ import com.masai.exceptions.EngineerExecption;
 		    	
 		    	
 		    	
-		    	ArrayList<ComplainBean> list = dao.getAllComplainDetais();
+		    	ArrayList<ComplainBean> list = null;
+				try {
+					list = dao.getAllComplainDetais();
+				} catch (EngineerExecption e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 		    	
 		    	for(ComplainBean i : list) {
 		    		System.out.println("\n ++++++++++++++++++++++++ \n");
@@ -162,19 +177,25 @@ import com.masai.exceptions.EngineerExecption;
 		    }
 		    
 		 
-		    public void assignComplainToEngineer() {
+		    public void assignComplainToEngineer() throws NumberFormatException, IOException {
 		    	
 		    	System.out.println("Enter Complain ID");
 		    	
-		    	int cid = sc.nextInt();
+		    	int cid =  Integer.parseInt(sc.readLine().trim());
 		    	System.out.println("Enter Engineer ID");
-		    	int eid = sc.nextInt();
+		    	int eid =    Integer.parseInt(sc.readLine().trim());
 		    	
 		    	ComplainDao complainDao = new  ComplainDaoImpl();
 		    	
 		    	String s = null;
 		    	
-		    	s = complainDao.assignComplainToEngg(cid, eid);
+		    	try {
+					s = complainDao.assignComplainToEngg(cid, eid);
+				} catch (EngineerExecption e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+					e.getMessage();
+				}
 		    	System.out.println("\n ++++++++++++++++++++++++ \n");
 		    	System.out.println(" " + s);
 		    	System.out.println("\n ++++++++++++++++++++++++ \n");
@@ -184,7 +205,7 @@ import com.masai.exceptions.EngineerExecption;
 		    
 //		    Engineer start ---------------------------------------------------------
 
-			public boolean EngineerLogin() {
+			public boolean EngineerLogin() throws IOException {
 			
 			
 			boolean flag = false;
@@ -192,12 +213,12 @@ import com.masai.exceptions.EngineerExecption;
 			
 			System.out.println("Enter Engineer Email(UserName)");
 			
-			String name = sc.next();
+			String name =   sc.readLine();
 			
 			System.out.println("Enter Engineer Pass");
 			
 			
-			String pass = sc.next();
+			String pass =   sc.readLine(); 
 			
 			
 			EngineerDao  engineerDao = new EngineerDaoImp();
@@ -219,32 +240,47 @@ import com.masai.exceptions.EngineerExecption;
 			return flag;
 		}
 
-			  public void UpdateStatusByEngineer() {
+			  public void UpdateStatusByEngineer() throws NumberFormatException, IOException {
 			    	
 			    	System.out.println("Enter Complain ID");
 			    	
-			    	int cid = sc.nextInt();
-			    	System.out.println("Enter Engineer UserName");
-			    	String email = sc.next();
+			    	int cid =   Integer.parseInt(sc.readLine().trim());
+			    	
+			    
+			    	System.out.println("Enter complain new status");
+			    	String status =  sc.readLine();
 			    	
 			    	EngineerDao engineerDao = new EngineerDaoImp();
 			    	
 			    	
-			    	String s = engineerDao.assignComplainToEngg(cid, email);
+			    	String s = null;
+					try {
+						s = engineerDao.updateStatusOfComplain(cid, status);
+						
+					} catch (EngineerExecption e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 			    	System.out.println("\n ++++++++++++++++++++++++ \n");
 			    	System.out.println(s);
 			    	System.out.println("\n ++++++++++++++++++++++++ \n");
 			    }
 
-			public void getComplainAssigenToEngineer() {
+			public void getComplainAssigenToEngineer() throws NumberFormatException, IOException {
 				
 				System.out.println("Enter Engineer ID ");
-				int eid = sc.nextInt();
+				int eid =   Integer.parseInt(sc.readLine().trim());
 				
 				EngineerDao engineerDao = new EngineerDaoImp();
 				
 				
-			ArrayList<ComplainBean> list = 	engineerDao.getComplainEnggId(eid);
+			ArrayList<ComplainBean> list = null;
+			try {
+				list = engineerDao.getComplainEnggId(eid);
+			} catch (EngineerExecption e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 				
 				for(ComplainBean i : list) {
 					System.out.println("\n ++++++++++++++++++++++++ \n");
@@ -266,23 +302,24 @@ import com.masai.exceptions.EngineerExecption;
 			
 			
 			
-			public  void ENgineerUpdateMobileNumber() {
+			public  void ENgineerUpdateMobileNumber() throws IOException {
 				
-				Scanner sc  = new Scanner(System.in);
+				
 				
 			System.out.println("Enter the Engineer Id ");
 			
-			int id = sc.nextInt();
+			int id =  Integer.parseInt(sc.readLine().trim());
 			
 			
 			System.out.println("Enter Current Mobile Number ");
-			String currNumber = sc.next();
+			String currNumber =   sc.readLine();
 			
 			System.out.println("Enter New Mobile Number");
-			String newNumber = sc.next();
+			int num =    Integer.parseInt(sc.readLine().trim());
 			
+			String newNumber  = String.valueOf(num); 
 			System.out.println("Enter Password ");
-			String pass = sc.next();
+			String pass =   sc.readLine();
 
 			EngineerDao  dao = new EngineerDaoImp();
 			String s = "Try Again Letter!";
@@ -297,22 +334,22 @@ import com.masai.exceptions.EngineerExecption;
 			 System.out.println("\n ++++++++++++++++++++++++ \n");
 		}
 
-			public  void EngineerUpdatePassword() {
+			public  void EngineerUpdatePassword() throws IOException {
 				
 				
 				
 				System.out.println("Enter the Engineer Id ");
 				
-				int id = sc.nextInt();
+				int id =  Integer.parseInt(sc.readLine().trim());
 				
 				System.out.println("Enter Email");
-				String email = sc.next().trim();
+				String email =   sc.readLine().trim();
 				
 				System.out.println("Enter Current Password ");
-				String currPass = sc.next().trim();
+				String currPass = sc.readLine().trim();
 				
 				System.out.println("Enter New Password");
-				String newPass = sc.next().trim();
+				String newPass =sc.readLine().trim();
 				
 				EngineerDao dao = new EngineerDaoImp();
 				
@@ -335,27 +372,29 @@ import com.masai.exceptions.EngineerExecption;
 //			Employee ===============================================================================================  
 			
 //			sign up 
-		public  void EmployeeRegistration() {
+		public  void EmployeeRegistration() throws NumberFormatException, IOException {
 				
 
-				
+//			  sc.readLine(); Integer.parseInt(sc.readLine().trim());
 				System.out.println("Employee Name");
-				String EmployeeName = sc.next().trim();
+				String EmployeeName =sc.readLine().trim();
 			
 				System.out.println("Employee Email");
 				
-				String email = sc.next().trim();
+				String email = sc.readLine().trim();
 
 				System.out.println("Employee Mobile Number");
 				
-				int mobile = sc.nextInt();
+				int num1 = Integer.parseInt(sc.readLine().trim());
+				
+				String mobile = String.valueOf(num1);
 				
 				System.out.println("Employee City");
 				
-				String city = sc.next().trim();
+				String city = sc.readLine().trim();
 				
 				System.out.println("Employee Password");
-				String pass = sc.next().trim();
+				String pass = sc.readLine().trim();
 				
 				EmployeeBean employeeBean = new EmployeeBean(0, EmployeeName, email, mobile, city, pass);
 					
@@ -363,7 +402,13 @@ import com.masai.exceptions.EngineerExecption;
 				
 				EmployeeDao dao = new EmployeeDaoImpl();
 				
-				 int id = dao.employeeRegistration(employeeBean);
+				 int id = 0;
+				try {
+					id = dao.employeeRegistration(employeeBean);
+				} catch (EngineerExecption e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 				
 				if(id>0) {
 				System.out.println("\n ++++++++++++++++++++++++ \n");
@@ -379,16 +424,16 @@ import com.masai.exceptions.EngineerExecption;
 
 		//login  
 
-		public boolean EmployeeLogin() {
+		public boolean EmployeeLogin() throws IOException {
 			
 			boolean flag = false;
 			
 			System.out.println("Enter Employee userName(Email)");
-			String userName = sc.next().trim();
+			String userName = sc.readLine().trim(); 
 			
 			System.out.println("Enter Employee Password");
 			
-			String pass = sc.next().trim();
+			String pass = sc.readLine(); 
 			
 			EmployeeDao employeeDao = new  EmployeeDaoImpl();
 			
@@ -418,28 +463,33 @@ import com.masai.exceptions.EngineerExecption;
 
 
 
-		public  void EmployeeUpdatePassword() {
+		public  void EmployeeUpdatePassword() throws IOException {
 			
 			
 			
 			System.out.println("Enter the Employee Id ");
 			
-			int id = sc.nextInt();
+			int id =  Integer.parseInt(sc.readLine().trim());
 			
 			System.out.println("Enter UserName(Email)");
-			String email = sc.next();
+			String email = sc.readLine(); 
 			
 			System.out.println("Enter Current Password ");
-			String currPass = sc.next();
+			String currPass =sc.readLine(); 
 			
 			System.out.println("Enter New Password");
-			String newPass = sc.next();
+			String newPass = sc.readLine();
 			
 			EmployeeDao dao = new EmployeeDaoImpl();
 			
 			String   s = "Please Try Again Letter";
 			
-			s = dao.employeeUpdatePass(id, email, currPass, newPass);
+			try {
+				s = dao.employeeUpdatePass(id, email, currPass, newPass);
+			} catch (EngineerExecption e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			
 			
 			System.out.println("\n ++++++++++++++++++++++++ \n");
@@ -450,23 +500,29 @@ import com.masai.exceptions.EngineerExecption;
 
 		//Complain ----------------------------------------------------------------------
 
-		public void CreateComplain() {
+		public void CreateComplain() throws IOException {
 			
 			
 			System.out.println("Enter complain Type (Software/HardWare");
-			String Ctype = sc.next();
+			String Ctype = sc.readLine();
 			System.out.println("Enter complain Status(enter new)");
-			String Cstatus = sc.next();
+			String Cstatus = sc.readLine(); 
 			
 			
 			System.out.println("Enter Employee ID");
-			int EmployeeId  = sc.nextInt();
+			int EmployeeId  =  Integer.parseInt(sc.readLine().trim());
 			
 			ComplainBean complainBean = new ComplainBean(0,Cstatus, Ctype,  EmployeeId);
 			
 			ComplainDao complainDao = new ComplainDaoImpl();
 			
-			int id = complainDao.CreateNewComplain(complainBean);
+			int id = 0;
+			try {
+				id = complainDao.CreateNewComplain(complainBean);
+			} catch (EngineerExecption e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			
 			if(id>0) {
 				System.out.println("\n ++++++++++++++++++++++++ \n");
@@ -478,18 +534,30 @@ import com.masai.exceptions.EngineerExecption;
 
 
 
-		public void AssignedEngineer() {
+		public void AssignedEngineer() throws NumberFormatException, IOException {
 			
 			
 			System.out.println("Enter Complain ID ");
 			
-			int cid = sc.nextInt();
+			int cid = Integer.parseInt(sc.readLine().trim());
 			
 			EngineerDao  engineerDao = new EngineerDaoImp();
 			
-			int EngineerID = engineerDao.getAssignedEngg(cid);
+			int EngineerID = 0;
+			try {
+				EngineerID = engineerDao.getAssignedEngg(cid);
+			} catch (EngineerExecption e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			
-			String EngineerName = engineerDao.getEnggDetails(EngineerID);
+			String EngineerName = null;
+			try {
+				EngineerName = engineerDao.getEnggDetails(EngineerID);
+			} catch (EngineerExecption e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			
 			System.out.println("\n ++++++++++++++++++++++++ \n");
 			System.out.println("Your assingen Engineer Name is :" + EngineerName);
@@ -498,17 +566,22 @@ import com.masai.exceptions.EngineerExecption;
 		}
 
 
-		public void CheckStatusOfProblem() {
+		public void CheckStatusOfProblem() throws NumberFormatException, IOException {
 			
 			System.out.println("Enter Complain ID");
 			
-			int cid = sc.nextInt();
+			int cid = Integer.parseInt(sc.readLine().trim());
 			
 			ComplainDao complainDao = new ComplainDaoImpl();
 			
 			String s = "Please enter correct Complain ID";
 			
-			s = complainDao.checkComplainStatus(cid);
+			try {
+				s = complainDao.checkComplainStatus(cid);
+			} catch (EngineerExecption e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			
 			System.out.println("\n ++++++++++++++++++++++++ \n");
 			System.out.println(s);
@@ -518,15 +591,21 @@ import com.masai.exceptions.EngineerExecption;
 
 
 
-		public void AllComplianHistoryList() {
+		public void AllComplianHistoryList() throws NumberFormatException, IOException {
 			
 			System.out.println("Enter Employee Id");
 			
-			int eid = sc.nextInt();
+			int eid =  Integer.parseInt(sc.readLine().trim());
 			
 			ComplainDao complainDao = new ComplainDaoImpl();
 			
-			ArrayList<ComplainBean> list = complainDao.getComplainPerEmployee(eid);
+			ArrayList<ComplainBean> list = null;
+			try {
+				list = complainDao.getComplainPerEmployee(eid);
+			} catch (EngineerExecption e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			
 			for(ComplainBean i : list) {
 				System.out.println("\n ++++++++++++++++++++++++ \n");
@@ -544,7 +623,10 @@ import com.masai.exceptions.EngineerExecption;
 			
 		}
 
-		}
+		
+	
+	
+	}
 
-
+                 
 

@@ -18,7 +18,7 @@ public class EngineerDaoImp implements EngineerDao {
 	
 
 	 @Override
-	public int addEngineer(EngineerBean bean) {
+	public int addEngineer(EngineerBean bean) throws EngineerExecption {
 
 		int id = 0;
 		
@@ -49,6 +49,7 @@ public class EngineerDaoImp implements EngineerDao {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			throw new EngineerExecption("Please intered Details");
 		}
 		
 		return id;
@@ -57,7 +58,7 @@ public class EngineerDaoImp implements EngineerDao {
 	 
 	 
 	@Override
-	public ArrayList<EngineerBean> allEngineersList() {
+	public ArrayList<EngineerBean> allEngineersList() throws EngineerExecption {
 		
 		ArrayList<EngineerBean> list = new ArrayList<>();
 		
@@ -85,6 +86,7 @@ public class EngineerDaoImp implements EngineerDao {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			throw new EngineerExecption("Please intered Details");
 		}
 		
 		
@@ -95,7 +97,7 @@ public class EngineerDaoImp implements EngineerDao {
 	
 	
 	@Override
-	public String removeEngineerByHODViaID(int id) {
+	public String removeEngineerByHODViaID(int id) throws EngineerExecption {
 		String s = "Can't be remove!";
 		
 		try(Connection conn = DBUtil.provideConnection()){
@@ -112,6 +114,7 @@ public class EngineerDaoImp implements EngineerDao {
 		} catch (SQLException e) {
 			
 			e.printStackTrace();
+			throw new EngineerExecption("Please intered Details");
 		}
 		
 		
@@ -143,13 +146,14 @@ public class EngineerDaoImp implements EngineerDao {
 				
 				if(password.equals(pass))
 				s = "Engineer Login Successfully!";
-			else 
-				throw new EngineerExecption("Please Check Id and Pass");
+			
+				
 			}
 			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			throw new EngineerExecption("Please Check Id and Pass");
 		}
 		
 		
@@ -160,10 +164,10 @@ public class EngineerDaoImp implements EngineerDao {
 	
 	
 	@Override
-	public int idByEnggMail(String enggMail) {
+	public int idByEnggMail(String enggMail)  throws EngineerExecption{
 		try (Connection conn = DBUtil.provideConnection()){
 			
-			PreparedStatement	ps=conn.prepareStatement("select enggId from engg where enggMail=?");
+			PreparedStatement	ps=conn.prepareStatement("select enggId from engineer where enggMail=?");
 			ps.setString(1, enggMail);
 			
 			ResultSet rs = ps.executeQuery();
@@ -173,38 +177,38 @@ public class EngineerDaoImp implements EngineerDao {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			throw new EngineerExecption("Please intered Deatails");
+			
 		}
 		return 0;
 	}
 
 	
 	
+//	update the status  by eng 
 	
 	@Override
-	public String assignComplainToEngg(int complainId, String enggMail) {
+	public String updateStatusOfComplain(int complainId,String status) throws EngineerExecption {
 		String msg =null;
 		try(Connection conn = DBUtil.provideConnection()) {
+		
 			
-			int id=idByEnggMail(enggMail);
+			PreparedStatement ps=conn.prepareStatement("update complain set complainStatus= ? where complainId=?");
 			
-			PreparedStatement ps1=conn.prepareStatement("insert into ComplainAssign values(?,?)");
-			ps1.setInt(1, complainId );
-			ps1.setInt(2, id);
+			ps.setString(1, status);
+			ps.setInt(2, complainId);
 			
-			int r = ps1.executeUpdate();
+			int s = ps.executeUpdate();
 			
-			ps1=conn.prepareStatement("update complain set complainStatus=\"Processing\" where complainId=?");
-			ps1.setInt(1, complainId);
-			
-			int s = ps1.executeUpdate();
-			
-			if(r>0 && s>0)
+			if( s>0)
 				
-				msg = "Task is Assigend to Engineer";
+				msg = "Status is Updated of Problem";
 			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+//			throw new EngineerExecption("");
+			throw new EngineerExecption("Please check intered Deatails");
 		}
 		
 		return msg;
@@ -235,12 +239,13 @@ public class EngineerDaoImp implements EngineerDao {
 				
 				s = "Password change successfully";
 			}
-			else throw new EngineerExecption("Please Enter Curr Pass,id,mail Correctly");
+		
 		
 		
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			throw new EngineerExecption("Please Enter Curr Pass,id,mail Correctly");
 		}
 		
 		return s;
@@ -279,12 +284,13 @@ String s = "Unable to Upadate Mobile Number";
 				s = "Mobile Number change successfully";
 			}
 			
-			else throw new EngineerExecption("Please Enter Curr Mobile,id,pass Correctly");
+			
 			
 		
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			throw new EngineerExecption("Please Enter Curr Mobile,id,pass Correctly");
 		}
 		
 		return s;
@@ -300,7 +306,7 @@ String s = "Unable to Upadate Mobile Number";
 //	employee query 
 	
 	@Override
-	public int getAssignedEngg(int complainId) {
+	public int getAssignedEngg(int complainId) throws EngineerExecption {
 			int EngineerId = 0;
 		
 try(Connection conn = DBUtil.provideConnection()){
@@ -315,13 +321,14 @@ try(Connection conn = DBUtil.provideConnection()){
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			throw new EngineerExecption("Please intered Deatails");
 		}
 		return EngineerId;
 	}
 
 	
 	@Override
-	public String getEnggDetails(int enggId) {
+	public String getEnggDetails(int enggId) throws EngineerExecption {
 		
 		String EngineerName = null;
 
@@ -341,6 +348,7 @@ try(Connection conn = DBUtil.provideConnection()){
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			throw new EngineerExecption("Please intered Details");
 		}
 
 		return EngineerName;
@@ -358,7 +366,7 @@ try(Connection conn = DBUtil.provideConnection()){
 	
 	
 	@Override
-	public ComplainBean getComplain(int complainId) {
+	public ComplainBean getComplain(int complainId) throws EngineerExecption {
 		ComplainBean cBean = null;
 		
 
@@ -378,13 +386,14 @@ try(Connection conn = DBUtil.provideConnection()){
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			throw new EngineerExecption("Please intered Details");
 		}
 		return cBean;
 	}
 
 	
 	@Override
-	public ArrayList<ComplainBean> getComplainEnggId(int enggId) {
+	public ArrayList<ComplainBean> getComplainEnggId(int enggId) throws EngineerExecption {
 		// TODO Auto-generated method stub
 		ArrayList<ComplainBean> list = new  ArrayList<>();
 		
@@ -401,7 +410,13 @@ try(Connection conn = DBUtil.provideConnection()){
 				
 				int complainId = rs.getInt(1);
 				
-				ComplainBean complainBean = getComplain(complainId);
+				ComplainBean complainBean = new ComplainBean();
+				try {
+					complainBean = getComplain(complainId);
+				} catch (EngineerExecption e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 				
 				list.add(complainBean);
 			}
@@ -410,6 +425,7 @@ try(Connection conn = DBUtil.provideConnection()){
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			throw new EngineerExecption("Please intered Details");
 		}
 		
 		

@@ -9,9 +9,9 @@ import com.masai.exceptions.EngineerExecption;
 public interface EngineerDao {
 
 	
-	public int addEngineer(EngineerBean bean);
+	public int addEngineer(EngineerBean bean) throws EngineerExecption;
 	
-	public ArrayList<EngineerBean> allEngineersList();
+	public ArrayList<EngineerBean> allEngineersList() throws EngineerExecption;
 	
 	public String removeEngineerByHODViaID(int id) throws EngineerExecption;
 	
@@ -23,17 +23,18 @@ public interface EngineerDao {
 	public String UpdateMobileNum(int id, String currMobileN, String newMobileN, String Pass) throws EngineerExecption;
 
 	
-	public ArrayList<ComplainBean> getComplainEnggId(int enggId);
+	public ArrayList<ComplainBean> getComplainEnggId(int enggId) throws EngineerExecption;
 	
-	int getAssignedEngg(int complainId);
+	int getAssignedEngg(int complainId) throws EngineerExecption;
 
-	public String getEnggDetails(int enggId);
+	public String getEnggDetails(int enggId)throws EngineerExecption;
 
-	public String assignComplainToEngg(int complainId, String enggMail);
+	public String updateStatusOfComplain(int complainId,String status) throws EngineerExecption ;//update status by eng;
 
-	int idByEnggMail(String enggMail);
+	int idByEnggMail(String enggMail) throws EngineerExecption;
 
-	public ComplainBean getComplain(int complainId);
+	public ComplainBean getComplain(int complainId)throws EngineerExecption
+	;
 	
 	
 	

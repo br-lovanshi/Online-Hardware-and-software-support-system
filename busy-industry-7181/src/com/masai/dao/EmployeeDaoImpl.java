@@ -13,7 +13,7 @@ import com.mysql.cj.xdevapi.Result;
 public class EmployeeDaoImpl implements EmployeeDao {
 
 	@Override
-	public int employeeRegistration(EmployeeBean employeeBean) {
+	public int employeeRegistration(EmployeeBean employeeBean) throws EngineerExecption {
 		
 		int id = 0;
 		
@@ -26,7 +26,7 @@ public class EmployeeDaoImpl implements EmployeeDao {
 		
 			ps.setString(1, employeeBean.getEmployeeName());
 			ps.setString(2, employeeBean.getEmployeeEmail());
-			ps.setInt(3, employeeBean.getEmployeeMobile());
+			ps.setString(3, employeeBean.getEmployeeMobile());
 			ps.setString(4, employeeBean.getEmployeeCity());
 			ps.setString(5, employeeBean.getEmployeePass());
 		
@@ -44,6 +44,7 @@ int x = ps.executeUpdate();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			throw new EngineerExecption("Please intered Deatails");
 		}
 		
 		return id;
@@ -93,7 +94,7 @@ int x = ps.executeUpdate();
 	
 	@Override
 	
-	public String employeeUpdatePass(int id, String userName, String currPass, String newPass) {
+	public String employeeUpdatePass(int id, String userName, String currPass, String newPass) throws EngineerExecption {
 			
 			
 			String s = "Unable to Update";
@@ -117,6 +118,7 @@ int x = ps.executeUpdate();
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
+				throw new EngineerExecption("Please intered Deatails");
 			}
 
 		return s;

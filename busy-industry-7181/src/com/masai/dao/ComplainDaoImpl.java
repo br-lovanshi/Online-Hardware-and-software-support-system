@@ -8,13 +8,14 @@ import java.util.ArrayList;
 
 import com.masai.bean.ComplainBean;
 import com.masai.bean.EngineerBean;
+import com.masai.exceptions.EngineerExecption;
 import com.masai.utility.DBUtil;
 import com.mysql.cj.protocol.Resultset;
 
 public class ComplainDaoImpl implements ComplainDao{
 
 	@Override
-	public int CreateNewComplain(ComplainBean bean) {
+	public int CreateNewComplain(ComplainBean bean) throws EngineerExecption {
 	
 
 				int id = 0;
@@ -47,6 +48,7 @@ public class ComplainDaoImpl implements ComplainDao{
 				} catch (SQLException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
+					throw new EngineerExecption("Please intered Details");
 				}
 				
 				return id;
@@ -56,7 +58,7 @@ public class ComplainDaoImpl implements ComplainDao{
 //	HOD Query
 	
 	@Override
-	public ArrayList<ComplainBean> getAllComplainDetais() {
+	public ArrayList<ComplainBean> getAllComplainDetais() throws EngineerExecption {
 		ArrayList<ComplainBean> clist=new ArrayList<ComplainBean>();
 		
 		try (Connection conn = DBUtil.provideConnection()){
@@ -72,6 +74,7 @@ public class ComplainDaoImpl implements ComplainDao{
 		
 		} catch (SQLException e) {
 			e.printStackTrace();
+			throw new EngineerExecption("Please intered Details");
 		}
 		
 		return clist;
@@ -80,7 +83,7 @@ public class ComplainDaoImpl implements ComplainDao{
 //HOD Query
 	
 	@Override
-	public String assignComplainToEngg(int complainId, int enggId) {
+	public String assignComplainToEngg(int complainId, int enggId) throws EngineerExecption {
 		String s = null;
 		try (Connection conn = DBUtil.provideConnection()){
 //			
@@ -105,6 +108,7 @@ public class ComplainDaoImpl implements ComplainDao{
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			throw new EngineerExecption("Please intered Details");
 		}
 		return s;
 	}
@@ -143,7 +147,7 @@ public class ComplainDaoImpl implements ComplainDao{
 	
 
 	@Override
-	public String checkComplainStatus(int complainId) {
+	public String checkComplainStatus(int complainId) throws EngineerExecption {
 		String status=null;
 		try (Connection conn = DBUtil.provideConnection()){
 			PreparedStatement ps =conn.prepareStatement("select complainStatus from complain where complainId=?");
@@ -153,6 +157,7 @@ public class ComplainDaoImpl implements ComplainDao{
 				status=rs.getString("complainStatus");
 		} catch (SQLException e) {
 			e.printStackTrace();
+			throw new EngineerExecption("Please intered Details");
 		}
 		
 		return status;
@@ -164,7 +169,7 @@ public class ComplainDaoImpl implements ComplainDao{
 //	Employee all Complain History of Employee 
 
 	@Override
-	public ArrayList<ComplainBean> getComplainPerEmployee(int employeeID) {
+	public ArrayList<ComplainBean> getComplainPerEmployee(int employeeID) throws EngineerExecption {
 		
 		ArrayList<ComplainBean> list = new  ArrayList<ComplainBean>();
 		
@@ -194,6 +199,7 @@ public class ComplainDaoImpl implements ComplainDao{
 			
 		}catch(SQLException e ){
 			e.getMessage();
+			throw new EngineerExecption("Please intered Details");
 		}
 				
 		return list;

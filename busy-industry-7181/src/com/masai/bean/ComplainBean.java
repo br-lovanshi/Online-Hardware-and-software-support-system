@@ -18,6 +18,10 @@ public class ComplainBean {
 		this.employeeId = employeeId;
 	}
 
+	public ComplainBean() {
+		super();
+	}
+
 	public int getComplainId() {
 		return complainId;
 	}
