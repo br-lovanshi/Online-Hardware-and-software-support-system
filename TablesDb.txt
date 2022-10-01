@@ -64,31 +64,40 @@ foreign key (eId) references Engineer(enggId) on delete cascade on update cascad
 );
 
 
+mysql> use seddb;
+Database changed
+mysql> show tables;
++-----------------+
+| Tables_in_seddb |
++-----------------+
+| complain        |
+| complainassign  |
+| employee        |
+| engineer        |
+| hod             |
++-----------------+
+5 rows in set (0.00 sec)
 
-mysql> desc hod;
-+-------------+-------------+------+-----+---------+-------+
-| Field       | Type        | Null | Key | Default | Extra |
-+-------------+-------------+------+-----+---------+-------+
-| HODUserName | varchar(40) | NO   | PRI | NULL    |       |
-| HODPass     | varchar(10) | NO   |     | NULL    |       |
-+-------------+-------------+------+-----+---------+-------+
-2 rows in set (0.03 sec)
+mysql> desc complain;
++----------------+-------------+------+-----+---------+----------------+
+| Field          | Type        | Null | Key | Default | Extra          |
++----------------+-------------+------+-----+---------+----------------+
+| complainId     | int         | NO   | PRI | NULL    | auto_increment |
+| complainType   | varchar(20) | NO   |     | NULL    |                |
+| complainStatus | varchar(20) | NO   |     | NULL    |                |
+| EmployeeId     | int         | NO   | MUL | NULL    |                |
++----------------+-------------+------+-----+---------+----------------+
+4 rows in set (0.00 sec)
 
-mysql> desc engineer
-    -> ;
-+--------------+-------------+------+-----+---------+----------------+
-| Field        | Type        | Null | Key | Default | Extra          |
-+--------------+-------------+------+-----+---------+----------------+
-| enggId       | int         | NO   | PRI | NULL    | auto_increment |
-| enggName     | varchar(30) | YES  |     | NULL    |                |
-| enggMail     | varchar(40) | YES  | UNI | NULL    |                |
-| enggMobile   | varchar(12) | YES  | UNI | NULL    |                |
-| enggPassword | varchar(10) | NO   |     | NULL    |                |
-+--------------+-------------+------+-----+---------+----------------+
-5 rows in set (0.01 sec)
-
-
-
+mysql> desc complainassign;
++----------------+-------------+------+-----+---------+-------+
+| Field          | Type        | Null | Key | Default | Extra |
++----------------+-------------+------+-----+---------+-------+
+| cid            | int         | YES  | MUL | NULL    |       |
+| engId          | int         | YES  | MUL | NULL    |       |
+| complainStatus | varchar(30) | NO   |     | NULL    |       |
++----------------+-------------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
 
 mysql> desc employee;
 +------------------+-------------+------+-----+---------+----------------+
@@ -103,35 +112,28 @@ mysql> desc employee;
 +------------------+-------------+------+-----+---------+----------------+
 6 rows in set (0.00 sec)
 
-mysql> desc complain;
-+----------------+-------------+------+-----+---------+-------+
-| Field          | Type        | Null | Key | Default | Extra |
-+----------------+-------------+------+-----+---------+-------+
-| complainId     | int         | NO   | PRI | NULL    |       |
-| complainName   | varchar(30) | NO   |     | NULL    |       |
-| complainDetail | varchar(40) | YES  |     | NULL    |       |
-| complainStatus | varchar(20) | NO   |     | NULL    |       |
-| complainType   | varchar(20) | NO   |     | NULL    |       |
-| complainAnswer | varchar(40) | YES  |     | NULL    |       |
-| EmployeeId     | int         | NO   | MUL | NULL    |       |
-+----------------+-------------+------+-----+---------+-------+
-7 rows in set (0.00 sec)
+mysql> desc engineer;
++--------------+-------------+------+-----+---------+----------------+
+| Field        | Type        | Null | Key | Default | Extra          |
++--------------+-------------+------+-----+---------+----------------+
+| enggId       | int         | NO   | PRI | NULL    | auto_increment |
+| enggName     | varchar(30) | YES  |     | NULL    |                |
+| enggMail     | varchar(40) | YES  | UNI | NULL    |                |
+| enggMobile   | varchar(12) | YES  | UNI | NULL    |                |
+| enggPassword | varchar(10) | NO   |     | NULL    |                |
++--------------+-------------+------+-----+---------+----------------+
+5 rows in set (0.00 sec)
 
-mysql> desc complainAssign;
-+----------------+-------------+------+-----+---------+-------+
-| Field          | Type        | Null | Key | Default | Extra |
-+----------------+-------------+------+-----+---------+-------+
-| cid            | int         | YES  | MUL | NULL    |       |
-| eid            | int         | YES  | MUL | NULL    |       |
-| complainStatus | varchar(30) | NO   |     | NULL    |       |
-+----------------+-------------+------+-----+---------+-------+
+mysql> desc hod;
++-------------+-------------+------+-----+---------+-------+
+| Field       | Type        | Null | Key | Default | Extra |
++-------------+-------------+------+-----+---------+-------+
+| HODUserName | varchar(40) | NO   | PRI | NULL    |       |
+| HODPass     | varchar(10) | NO   |     | NULL    |       |
+| name        | varchar(20) | YES  |     | NULL    |       |
++-------------+-------------+------+-----+---------+-------+
 3 rows in set (0.00 sec)
 
 mysql>
-
-
-
-
-
 
 
